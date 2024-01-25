@@ -11,6 +11,10 @@ body {
     margin: 0;
 }
 
+h1 {
+    height: 20px;
+}
+
 #tic-tac-toe-board {
     display: grid;
     grid-template-rows: repeat(3, 100px);
@@ -34,6 +38,13 @@ body {
 
 .cell:hover {
     background-color: #E3E3E3;
+}
+
+.game-message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px;
+    height: 20px;
 }
 
 @media (max-width: 600px) {

@@ -23,6 +23,7 @@ function handlePlayerTurn(clickedCellIndex) {
         return;
     }
     gameBoard[clickedCellIndex] = currentPlayer;
+    checkForWinOrDraw();
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
 }
 
@@ -43,6 +44,41 @@ function updateUI() {
     for (let i = 0; i < cells.length; ++i) {
         cells[i].innerText = gameBoard[i];
     }
+}
+
+function checkForWinOrDraw() {
+    let roundWon = false;
+
+    for (let i = 0; i < winningConditions.length; ++i) {
+        const [a, b, c] = winningConditions[i];
+        if (gameBoard[a] && gameBoard[b] && gameBoard[c] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+            roundWon = true;
+            break;
+        }
+    }
+
+    if (roundWon) {
+        announceWinner(currentPlayer);
+        gameActive = false;
+        return;
+    }
+
+    let roundDraw = !gameBoard.includes('');
+    if (roundDraw) {
+        announceDraw();
+        gameActive = false;
+        return;
+    }
+}
+
+function announceWinner(player) {
+    const messageElement = document.getElementById("gameMessage");
+    messageElement.innerText = `Player ${player} Wins!`;
+}
+
+function announceDraw() {
+    const messageElement = document.getElementById("gameMessage");
+    messageElement.innerText = `Game Draw!`;
 }
 
 const cells = document.querySelectorAll('.cell');
