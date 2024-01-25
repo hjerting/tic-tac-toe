@@ -30,9 +30,7 @@ function handlePlayerTurn(clickedCellIndex) {
 function cellClicked(clickedCellEvent) {
     const clickedCell = clickedCellEvent.target;
     const clickedCellIndex = parseInt(clickedCell.id.replace('cell-', '')) - 1;
-    console.log(`cell: ${clickedCellIndex}`);
     if (gameBoard[clickedCellIndex] !== '' || !gameActive) {
-        console.log("No change! Already clicked this cell!");
         return;
     }
 
@@ -81,7 +79,21 @@ function announceDraw() {
     messageElement.innerText = `Game Draw!`;
 }
 
+function resetGame() {
+    for (let i = 0; i < gameBoard.length; ++i) {
+        gameBoard[i] = '';
+    } // Clear the game board
+    gameActive = true; // Set the game to active
+    currentPlayer = 'X'; // Reset to player X
+    cells.forEach(cell => {
+        cell.innerText = '';
+    }); // Clears all cells
+    document.getElementById('gameMessage').innerText = ''; // Remove game win or draw message
+}
+
 const cells = document.querySelectorAll('.cell');
 cells.forEach(cell => {
     cell.addEventListener('click', cellClicked, false);
 });
+const resetButton = document.getElementById('resetButton');
+resetButton.addEventListener('click', resetGame, false);
